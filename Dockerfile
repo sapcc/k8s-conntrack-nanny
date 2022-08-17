@@ -1,4 +1,4 @@
-FROM golang:1.12.3-alpine3.9
+FROM golang:1.12.14-alpine3.9
 WORKDIR /go/src/github.com/sapcc/k8s-conntrack-nanny
 ADD . .
 RUN go build -v -o /k8s-conntrack-nanny
