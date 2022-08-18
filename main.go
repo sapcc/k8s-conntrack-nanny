@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"log"
 	"os"
@@ -19,12 +20,12 @@ import (
 )
 
 var kubeconfig string
-var context string
+var ctx string
 var debug bool
 
 func main() {
 	flag.StringVar(&kubeconfig, "kubeconfig", "", "absolute path to the kubeconfig file")
-	flag.StringVar(&context, "context", "", "The context to use from the kubeconfig file")
+	flag.StringVar(&ctx, "context", "", "The context to use from the kubeconfig file")
 	flag.BoolVar(&debug, "debug", false, "Enable some debug logging")
 	flag.Parse()
 
@@ -37,12 +38,12 @@ func main() {
 		close(stop)
 	}()
 
-	client, err := NewClient(kubeconfig, context)
+	client, err := NewClient(kubeconfig, ctx)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	client.CoreV1().Endpoints("").List(api_v1.ListOptions{})
+	client.CoreV1().Endpoints("").List(context.TODO(), api_v1.ListOptions{})
 
 	factory := informers.NewSharedInformerFactory(client, 30*time.Minute)
 

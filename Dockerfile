@@ -1,12 +1,10 @@
-FROM golang:1.12.14-alpine3.9
+FROM golang:1.19 AS builder
 WORKDIR /go/src/github.com/sapcc/k8s-conntrack-nanny
 ADD . .
-RUN go build -v -o /k8s-conntrack-nanny
+RUN CGO_ENABLED=0 go build -v -o /k8s-conntrack-nanny
 
 FROM alpine:3.9
 LABEL source_repository="https://github.com/sapcc/k8s-conntrack-nanny"
 RUN apk add --no-cache conntrack-tools
-COPY --from=0 /k8s-conntrack-nanny /
+COPY --from=builder /k8s-conntrack-nanny /k8s-conntrack-nanny
 ENTRYPOINT ["/k8s-conntrack-nanny"]
-
-
