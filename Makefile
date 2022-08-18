@@ -1,5 +1,5 @@
 IMAGE := keppel.eu-de-1.cloud.sap/ccloud/k8s-conntrack-nanny
-VERSION:= v0.2.4
+VERSION:= v0.2.5
 
 
 build:
