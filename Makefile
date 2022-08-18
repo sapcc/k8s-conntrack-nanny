@@ -1,5 +1,5 @@
-IMAGE := sapcc/k8s-conntrack-nanny
-VERSION:= v0.1.0
+IMAGE := keppel.eu-de-1.cloud.sap/ccloud/k8s-conntrack-nanny
+VERSION:= v0.2.4
 
 
 build:
@@ -7,8 +7,11 @@ build:
 
 docker:
 	docker build -t $(IMAGE):$(VERSION) .
-push: 
+push:
 	docker push $(IMAGE):$(VERSION)
+
+docker-push-mac:
+	docker buildx build  --platform linux/amd64 . -t ${IMAGE}:${VERSION} --push
 
 test:
 	docker run --cap-add=NET_ADMIN -v $(HOME)/.kube/config:/kubeconfig $(IMAGE):$(VERSION) --kubeconfig /kubeconfig --context $(KUBECONTEXT)
