@@ -1,5 +1,5 @@
 IMAGE := keppel.eu-de-1.cloud.sap/ccloud/k8s-conntrack-nanny
-VERSION:= v0.2.5
+VERSION:= v0.2.6
 
 
 build:
@@ -10,7 +10,7 @@ docker:
 push:
 	docker push $(IMAGE):$(VERSION)
 
-docker-push-mac:
+buildx:
 	docker buildx build  --platform linux/amd64 . -t ${IMAGE}:${VERSION} --push
 
 test:
