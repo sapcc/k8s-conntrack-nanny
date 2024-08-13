@@ -1,4 +1,4 @@
-FROM golang:1.20 AS builder
+FROM golang:1.23 AS builder
 WORKDIR /go/src/github.com/sapcc/k8s-conntrack-nanny
 ADD . .
 RUN CGO_ENABLED=0 go build -v -o /k8s-conntrack-nanny
